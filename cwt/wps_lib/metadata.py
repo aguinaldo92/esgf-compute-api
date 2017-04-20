@@ -134,11 +134,27 @@ class ProcessStarted(xml.XMLDocument):
     def __init__(self, **kwargs):
         super(ProcessStarted, self).__init__(namespace=ns.WPS, nsmap=ns.NSMAP, **kwargs)
 
+    @wps_zero_one_element(store_value=True)
+    def value(self):
+        pass
+
+    @xml.Attribute(value_type=int)
+    def percent_completed(self):
+        pass
+
     def __str__(self):
-        return self.__class__.__name__
+        s = 'ProcessStarted'
+
+        if self.value is not None:
+            s = '{} {}'.format(s, self.value)
+
+        if self.percent_completed is not None:
+            s = '{} {} %'.format(s, self.percent_completed)
+
+        return s
 
     def __eq__(self, other):
-        return str(self) == str(other)
+        return self.__class__ == other.__class__
 
 class ProcessPaused(xml.XMLDocument):
     __metaclass__ = xml.XMLDocumentMarkupType
@@ -150,7 +166,7 @@ class ProcessPaused(xml.XMLDocument):
         return self.__class__.__name__
 
     def __eq__(self, other):
-        return str(self) == str(other)
+        return self.__class__ == other.__class__
 
 class ProcessSucceeded(xml.XMLDocument):
     __metaclass__ = xml.XMLDocumentMarkupType
@@ -162,7 +178,7 @@ class ProcessSucceeded(xml.XMLDocument):
         return self.__class__.__name__
 
     def __eq__(self, other):
-        return str(self) == str(other)
+        return self.__class__ == other.__class__
 
 class ProcessFailed(xml.XMLDocument):
     __metaclass__ = xml.XMLDocumentMarkupType
@@ -178,7 +194,7 @@ class ProcessFailed(xml.XMLDocument):
         return self.__class__.__name__
 
     def __eq__(self, other):
-        return str(self) == str(other)
+        return self.__class__ == other.__class__
 
 class ComplexData(xml.XMLDocument):
     __metaclass__ = xml.XMLDocumentMarkupType
