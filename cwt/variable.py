@@ -117,7 +117,7 @@ class Variable(parameter.Parameter):
         }
 
         if self.domains:
-            params['domain'] = '|'.join(dom.name for dom in self.domains)
+            params['domain'] = '|'.join(dom for dom in self.domains)
 
         if self.var_name:
             params['id'] += '|' + str(self.name)
